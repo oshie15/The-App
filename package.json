@@ -1,0 +1,28 @@
+{
+	"name": "user-management-app",
+	"version": "1.0.0",
+	"description": "Full-stack user management application with React.js and Node.js",
+	"main": "server/index.js",
+	"scripts": {
+		"dev": "concurrently \"npm run server\" \"npm run client\"",
+		"server": "cd server && npm run dev",
+		"client": "cd client && npm start",
+		"build": "cd client && npm run build",
+		"install-all": "npm install && cd server && npm install && cd ../client && npm install",
+		"setup": "node setup.js",
+		"docker-up": "docker-compose up -d",
+		"docker-down": "docker-compose down",
+		"docker-build": "docker-compose up --build -d"
+	},
+	"keywords": [
+		"react",
+		"node",
+		"postgresql",
+		"user-management"
+	],
+	"author": "",
+	"license": "MIT",
+	"devDependencies": {
+		"concurrently": "^8.2.2"
+	}
+}
