@@ -15,6 +15,7 @@ const UserTable = ({ users, setUsers, fetchUsers, loading }) => {
     // Debounced filter effect
     React.useEffect(() => {
         const timeoutId = setTimeout(() => {
+            console.log('Filter changed:', { filter, sortBy, sortOrder, statusFilter });
             fetchUsers(filter, sortBy, sortOrder, statusFilter);
         }, 300);
 

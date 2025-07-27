@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Navbar, Nav, Container } from 'react-bootstrap';
 import { useAuth } from '../context/AuthContext';
 import UserTable from './UserTable';
@@ -11,7 +11,7 @@ const Dashboard = () => {
     const [users, setUsers] = useState([]);
     const [loading, setLoading] = useState(true);
 
-    const fetchUsers = async (filter = '', sortBy = 'last_login_time', sortOrder = 'desc', statusFilter = 'all') => {
+    const fetchUsers = React.useCallback(async (filter = '', sortBy = 'last_login_time', sortOrder = 'desc', statusFilter = 'all') => {
         try {
             setLoading(true);
             const params = {};
@@ -20,14 +20,16 @@ const Dashboard = () => {
             if (sortOrder) params.sortOrder = sortOrder;
             if (statusFilter && statusFilter !== 'all') params.statusFilter = statusFilter;
 
+            console.log('Fetching users with params:', params);
             const response = await axios.get(`${API_BASE_URL}/api/users`, { params });
+            console.log('Users response:', response.data);
             setUsers(response.data.users);
         } catch (error) {
             console.error('Error fetching users:', error);
         } finally {
             setLoading(false);
         }
-    };
+    }, []);
 
     useEffect(() => {
         fetchUsers();
