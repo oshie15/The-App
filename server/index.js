@@ -24,7 +24,7 @@ app.use(limiter);
 // CORS configuration
 app.use(cors({
     origin: process.env.NODE_ENV === 'production'
-        ? ['https://dulcet-capybara-7f19d0.netlify.app', 'https://dulcet-capybara-7f19d0.netlify.app/', 'http://localhost:3000']
+        ? ['https://dynamic-kelpie-5f5a2d.netlify.app', 'https://dynamic-kelpie-5f5a2d.netlify.app/', 'http://localhost:3000']
         : ['http://localhost:3000'],
     credentials: true
 }));
