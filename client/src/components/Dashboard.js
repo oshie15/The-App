@@ -33,7 +33,7 @@ const Dashboard = () => {
 
     useEffect(() => {
         fetchUsers();
-    }, []);
+    }, [fetchUsers]);
 
     const handleLogout = () => {
         logout();
