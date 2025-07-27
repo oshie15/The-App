@@ -32,8 +32,8 @@ export const AuthProvider = ({ children }) => {
             if (token) {
                 try {
                     // Try to make a request to verify token
-                    const response = await axios.get(`${API_BASE_URL}/api/users`);
-                    setUser(response.data.user || { id: 1, name: 'Admin', email: 'admin@example.com' });
+                    const response = await axios.get(`${API_BASE_URL}/api/users/me`);
+                    setUser(response.data.user);
                 } catch (error) {
                     console.error('Auth check failed:', error);
                     // Only logout if it's a real authentication error, not just a missing token

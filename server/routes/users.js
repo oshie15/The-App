@@ -4,6 +4,31 @@ const { authenticateToken } = require('../middleware/auth');
 
 const router = express.Router();
 
+// Get current user profile
+router.get('/me', authenticateToken, async (req, res) => {
+    try {
+        // Update user's last activity
+        await updateLastActivity(req.user.id);
+
+        const result = await pool.query(
+            'SELECT id, name, email, status, registration_time, last_login_time, last_activity_time FROM users WHERE id = $1',
+            [req.user.id]
+        );
+
+        if (result.rows.length === 0) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        res.json({
+            user: result.rows[0]
+        });
+
+    } catch (error) {
+        console.error('Error fetching user profile:', error);
+        res.status(500).json({ message: 'Internal server error' });
+    }
+});
+
 // Get all users with sorting (requirement 3)
 router.get('/', authenticateToken, async (req, res) => {
     try {
