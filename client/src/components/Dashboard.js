@@ -11,13 +11,19 @@ const Dashboard = () => {
     const [users, setUsers] = useState([]);
     const [loading, setLoading] = useState(true);
 
-    const fetchUsers = async () => {
+    const fetchUsers = async (filter = '', sortBy = 'last_login_time', sortOrder = 'desc', statusFilter = 'all') => {
         try {
             setLoading(true);
-            const response = await axios.get(`${API_BASE_URL}/api/users`);
+            const params = {};
+            if (filter) params.filter = filter;
+            if (sortBy) params.sortBy = sortBy;
+            if (sortOrder) params.sortOrder = sortOrder;
+            if (statusFilter && statusFilter !== 'all') params.statusFilter = statusFilter;
+
+            const response = await axios.get(`${API_BASE_URL}/api/users`, { params });
             setUsers(response.data.users);
         } catch (error) {
-            // Optionally handle error
+            console.error('Error fetching users:', error);
         } finally {
             setLoading(false);
         }

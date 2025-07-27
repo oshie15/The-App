@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Table, Button, Form, InputGroup, Badge, OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { FaLock, FaUnlock, FaTrash, FaSort, FaSortUp, FaSortDown } from 'react-icons/fa';
 import axios from 'axios';
@@ -8,8 +8,18 @@ import { toast } from 'react-toastify';
 const UserTable = ({ users, setUsers, fetchUsers, loading }) => {
     const [selectedUsers, setSelectedUsers] = useState([]);
     const [filter, setFilter] = useState('');
+    const [statusFilter, setStatusFilter] = useState('all');
     const [sortBy, setSortBy] = useState('last_login_time');
     const [sortOrder, setSortOrder] = useState('desc');
+
+    // Debounced filter effect
+    React.useEffect(() => {
+        const timeoutId = setTimeout(() => {
+            fetchUsers(filter, sortBy, sortOrder, statusFilter);
+        }, 300);
+
+        return () => clearTimeout(timeoutId);
+    }, [filter, sortBy, sortOrder, statusFilter, fetchUsers]);
 
     const handleSelectAll = (e) => {
         if (e.target.checked) {
@@ -182,6 +192,15 @@ const UserTable = ({ users, setUsers, fetchUsers, loading }) => {
                             />
                         </InputGroup>
                     </OverlayTrigger>
+                    <Form.Select
+                        style={{ width: '150px' }}
+                        value={statusFilter}
+                        onChange={(e) => setStatusFilter(e.target.value)}
+                    >
+                        <option value="all">All Status</option>
+                        <option value="active">Active Only</option>
+                        <option value="blocked">Blocked Only</option>
+                    </Form.Select>
                 </div>
             </div>
 
