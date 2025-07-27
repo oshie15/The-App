@@ -20,7 +20,7 @@ const UserTable = ({ users, setUsers, fetchUsers, loading }) => {
         }, 300);
 
         return () => clearTimeout(timeoutId);
-    }, [filter, sortBy, sortOrder, statusFilter]);
+    }, [filter, sortBy, sortOrder, statusFilter, fetchUsers]);
 
     const handleSelectAll = (e) => {
         if (e.target.checked) {

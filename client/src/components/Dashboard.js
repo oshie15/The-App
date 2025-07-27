@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Navbar, Nav, Container } from 'react-bootstrap';
 import { useAuth } from '../context/AuthContext';
 import UserTable from './UserTable';
@@ -11,7 +11,7 @@ const Dashboard = () => {
     const [users, setUsers] = useState([]);
     const [loading, setLoading] = useState(true);
 
-    const fetchUsers = async (filter = '', sortBy = 'last_login_time', sortOrder = 'desc', statusFilter = 'all') => {
+    const fetchUsers = useCallback(async (filter = '', sortBy = 'last_login_time', sortOrder = 'desc', statusFilter = 'all') => {
         try {
             setLoading(true);
             const params = {};
@@ -29,7 +29,7 @@ const Dashboard = () => {
         } finally {
             setLoading(false);
         }
-    };
+    }, []);
 
     useEffect(() => {
         fetchUsers();
