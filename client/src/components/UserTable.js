@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Table, Button, Form, InputGroup, Badge, OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { FaLock, FaUnlock, FaTrash, FaSort, FaSortUp, FaSortDown } from 'react-icons/fa';
 import axios from 'axios';
@@ -20,7 +20,7 @@ const UserTable = ({ users, setUsers, fetchUsers, loading }) => {
         }, 300);
 
         return () => clearTimeout(timeoutId);
-    }, [filter, sortBy, sortOrder, statusFilter, fetchUsers]);
+    }, [filter, sortBy, sortOrder, statusFilter]);
 
     const handleSelectAll = (e) => {
         if (e.target.checked) {
